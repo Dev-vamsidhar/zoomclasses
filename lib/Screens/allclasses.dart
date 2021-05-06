@@ -25,6 +25,7 @@ class Allclasses extends StatelessWidget {
                 SmartSelect.single(
                     title: "Select your section",
                     modalType: S2ModalType.popupDialog,
+                    placeholder: controller.defaultsection,
                     choiceItems: [
                       S2Choice<String>(value: 'A', title: 'A Section'),
                       S2Choice<String>(value: 'B', title: 'B Section'),

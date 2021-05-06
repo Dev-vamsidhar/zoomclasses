@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "75697574832",
+    "project_id": "onlineclass-7c2be",
+    "storage_bucket": "onlineclass-7c2be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:75697574832:android:1c4e77e40802d4e402fc75",
+        "android_client_info": {
+          "package_name": "com.exams.easyzoom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "75697574832-evbht43p6hot7oisl03b2qv76i46rs4v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXsU9E9nIz-MIFnoHrKi-hVku06188VZo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "75697574832-evbht43p6hot7oisl03b2qv76i46rs4v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Getclasses extends GetxController {
   var subjects = ["1"];
@@ -85,4 +86,19 @@ class Getclasses extends GetxController {
     }
   }
 
+  Future help() async {
+    final Uri params = Uri(
+      scheme: 'mailto',
+      path: 'dev.vamsidhar@gmail.com',
+      query:
+          'subject=EasyCliq Feedback&body=""', //add subject and body here
+    );
+
+    var url = params.toString();
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 }

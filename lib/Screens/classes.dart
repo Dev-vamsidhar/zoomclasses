@@ -19,6 +19,9 @@ class Classes extends StatelessWidget {
               onSelected: (value) {
                 if (value == "All Classes") {
                   Get.offAll(Allclasses());
+                } else {
+                  Getclasses getclasses = Getclasses();
+                  getclasses.help();
                 }
               },
               itemBuilder: (BuildContext context) {

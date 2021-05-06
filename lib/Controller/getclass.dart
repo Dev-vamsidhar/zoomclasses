@@ -85,20 +85,4 @@ class Getclasses extends GetxController {
     }
   }
 
-  // static getdatetimeday() {
-  //   String day = DateTime.now().weekday.toString();
-  //   List<String> daysinaweek = [
-  //     "Monday",
-  //     "Tuesday",
-  //     "Wenesday",
-  //     "Thrusday",
-  //     "Friday"
-  //   ];
-  //   String date =
-  //       "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}";
-
-  //   String time = DateTime.now().hour.toString();
-  //   print(date);
-  //   print(time);
-  // }
 }

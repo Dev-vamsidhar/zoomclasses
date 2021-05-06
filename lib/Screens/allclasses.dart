@@ -1,4 +1,5 @@
 import 'package:easyzoom/Controller/getclass.dart';
+import 'package:easyzoom/Screens/classes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,13 @@ class Allclasses extends StatelessWidget {
         backgroundColor: Colors.grey[300],
         appBar: AppBar(
           backgroundColor: Colors.blueGrey,
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () async {
+              Get.to(Classes());
+            },
+          ),
           title: Text("ECE Online Classes"),
         ),
         body: GetBuilder<Getclasses>(
@@ -25,7 +33,7 @@ class Allclasses extends StatelessWidget {
                 SmartSelect.single(
                     title: "Select your section",
                     modalType: S2ModalType.popupDialog,
-                    placeholder: controller.defaultsection,
+                    placeholder: controller.defaultsection.toUpperCase(),
                     choiceItems: [
                       S2Choice<String>(value: 'A', title: 'A Section'),
                       S2Choice<String>(value: 'B', title: 'B Section'),
@@ -34,6 +42,13 @@ class Allclasses extends StatelessWidget {
                     ],
                     value: "vamsidhar red",
                     onChange: (value) {
+                      controller.savepreference(
+                          section: value.value
+                              .toString()
+                              .removeAllWhitespace
+                              .toLowerCase());
+                      controller.gettimetable(
+                          section: value.value.toString().toLowerCase());
                       controller.getsubjects(
                           section: value.value.toString().toLowerCase());
                     }),

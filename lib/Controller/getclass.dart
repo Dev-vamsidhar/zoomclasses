@@ -17,7 +17,8 @@ class Getclasses extends GetxController {
     "2:45 PM-03:45 PM"
   ];
   getsubjects({String course = "ECE", String section = "d"}) async {
-    getpreference();
+    await getpreference();
+    print(section);
     try {
       var data;
       var firebase = FirebaseFirestore.instance;

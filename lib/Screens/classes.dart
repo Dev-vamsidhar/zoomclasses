@@ -18,7 +18,7 @@ class Classes extends StatelessWidget {
             PopupMenuButton<String>(
               onSelected: (value) {
                 if (value == "All Classes") {
-                  Get.to(Allclasses());
+                  Get.offAll(Allclasses());
                 }
               },
               itemBuilder: (BuildContext context) {

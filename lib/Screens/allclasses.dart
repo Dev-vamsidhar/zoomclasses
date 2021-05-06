@@ -17,7 +17,7 @@ class Allclasses extends StatelessWidget {
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () async {
-              Get.to(Classes());
+              Get.offAll(Classes());
             },
           ),
           title: Text("ECE Online Classes"),
@@ -40,7 +40,7 @@ class Allclasses extends StatelessWidget {
                       S2Choice<String>(value: 'C', title: 'C Section'),
                       S2Choice<String>(value: 'D', title: 'D Section'),
                     ],
-                    value: "vamsidhar red",
+                    value: "",
                     onChange: (value) {
                       controller.savepreference(
                           section: value.value

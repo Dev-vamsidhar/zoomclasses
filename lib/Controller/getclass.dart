@@ -52,6 +52,7 @@ class Getclasses extends GetxController {
 
   savepreference({String section}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     update();
     await prefs.setString('section', section);
     print("done");
@@ -59,7 +60,12 @@ class Getclasses extends GetxController {
 
   Future<String> getpreference() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    defaultsection = prefs.getString('section');
+    if (prefs.containsKey("section")) {
+      defaultsection = prefs.getString('section');
+    } else {
+      defaultsection = 'a';
+    }
+
     update();
 
     return defaultsection;
@@ -90,8 +96,7 @@ class Getclasses extends GetxController {
     final Uri params = Uri(
       scheme: 'mailto',
       path: 'dev.vamsidhar@gmail.com',
-      query:
-          'subject=EasyCliq Feedback&body=""', //add subject and body here
+      query: 'subject=EasyCliq Feedback&body=""', //add subject and body here
     );
 
     var url = params.toString();

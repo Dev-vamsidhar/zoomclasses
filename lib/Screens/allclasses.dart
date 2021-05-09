@@ -52,6 +52,14 @@ class Allclasses extends StatelessWidget {
                       controller.getsubjects(
                           section: value.value.toString().toLowerCase());
                     }),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "${controller.message}",
+                    style: TextStyle(
+                        fontStyle: FontStyle.italic, color: Colors.grey),
+                  ),
+                ),
                 controller.subjects[0] != "0"
                     ? Expanded(
                         child: ListView.builder(
@@ -99,6 +107,11 @@ class Allclasses extends StatelessWidget {
                                                   .zoomlinks[index][0];
                                               String password = controller
                                                   .zoomlinks[index][1];
+                                              if (GetPlatform.isWeb) {
+                                                controller.launchweb(
+                                                    zoomlink, password);
+                                              }
+
                                               Clipboard.setData(ClipboardData(
                                                   text: password));
                                               print(zoomlink);

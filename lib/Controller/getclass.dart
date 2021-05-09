@@ -1,13 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:device_info/device_info.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:js' as js;
 
 class Getclasses extends GetxController {
   var subjects = ["1"];
   var zoomlinks;
   var zoompasswords;
   var availablesection = [];
+  String message;
+
   var timetablesubjects;
   String defaultsection;
   List<String> time = [
@@ -18,6 +25,7 @@ class Getclasses extends GetxController {
     "2:45 PM-03:45 PM"
   ];
   getsubjects({String course = "ECE", String section = "d"}) async {
+    EasyLoading.show(status: "Loading");
     await getpreference();
     print(section);
     try {
@@ -25,6 +33,7 @@ class Getclasses extends GetxController {
       var firebase = FirebaseFirestore.instance;
       await firebase.collection("classes").doc("subjects").get().then((value) {
         data = value.data()[course][section];
+        message = value.data()["message"];
       });
       subjects = data.keys.toList();
       //array of zoomlink ansd password eg:["link","paassword"]on index 0
@@ -38,6 +47,7 @@ class Getclasses extends GetxController {
     } catch (e) {
       print("Error while getting subjects and error is $e}");
     }
+    EasyLoading.dismiss();
   }
 
   @override
@@ -47,12 +57,12 @@ class Getclasses extends GetxController {
     print("default is $defaultsection");
     getsubjects(section: defaultsection);
     gettimetable(section: defaultsection);
+    checklogin();
     super.onInit();
   }
 
   savepreference({String section}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
     update();
     await prefs.setString('section', section);
     print("done");
@@ -71,9 +81,28 @@ class Getclasses extends GetxController {
     return defaultsection;
   }
 
-  gettimetable({String course = "ECE", String section}) async {
-    getpreference();
+  checklogin() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    print('Running on ${androidInfo.id}'); // e.g. "Moto G (4)"
 
+    FirebaseFirestore.instance.collection("users").doc("login").set({
+      androidInfo.id: {
+        "Device name": androidInfo.device,
+        "time": DateTime.now(),
+        "Device detailes": [
+          androidInfo.androidId,
+          androidInfo.board,
+          androidInfo.brand,
+          androidInfo.display,
+        ],
+      }
+    }, SetOptions(merge: true));
+  }
+
+  gettimetable({String course = "ECE", String section}) async {
+    EasyLoading.show(status: "Loading");
+    getpreference();
     var data;
     try {
       String day = DateTime.now().weekday.toString();
@@ -86,10 +115,13 @@ class Getclasses extends GetxController {
       timetablesubjects = data[day];
       print(timetablesubjects);
       update();
+      EasyLoading.dismiss();
       return timetablesubjects;
     } catch (e) {
       print("Error while getting timetable and error is $e}");
+      EasyLoading.dismiss();
     }
+    print("dismisitn");
   }
 
   Future help() async {
@@ -105,5 +137,13 @@ class Getclasses extends GetxController {
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  launchweb(String zoomlink, String password) async {
+    print("it is web");
+
+   await Clipboard.setData(ClipboardData(text: password));
+    
+    js.context.callMethod('open', [zoomlink]);
   }
 }
